@@ -40,6 +40,9 @@
 *.x86_64
 *.hex
 
+# the program
+qp
+
 # Debug files
 *.dSYM/
 *.su
