@@ -5,8 +5,8 @@
 
 int main (int argc, char *argv[])
 {   
-    float x_vals[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    float y_vals[10];
+    float x_vals[] = DEFAULT_XVALS;
+    float y_vals[DEFAULT_LEN];
     if (argc != 3)
     {
         printf("please input 2 arguments: qp w.x y.z\n");
