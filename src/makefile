@@ -17,7 +17,6 @@ $(ODIR)/%.o: %.c $(DEPS)
 		$(CC) -c -o $@ $< $(CFLAGS)
 
 qp.app: $(OBJ)
-	mkdir -p $(ODIR)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 .PHONY: clean
