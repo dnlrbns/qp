@@ -7,7 +7,11 @@ int main (int argc, char *argv[])
 {   
     float x_vals[] = DEFAULT_XVALS;
     float y_vals[DEFAULT_LEN];
-    if (argc != 3)
+    if (argc == 1)
+    {
+        printf("stdin mode note yet implemented");
+    }
+    else if (argc != 3)
     {
         printf("please input 2 arguments: qp w.x y.z\n");
     }
