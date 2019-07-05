@@ -1,61 +1,71 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
+#include <stdlib.h> 
+#include <string.h>
 #include "qp.h"
+
+#define ROWS 10
+#define COLS 30
+#define LINEBUFF 100
+
+int qp(char *pscreen);
 
 int main (int argc, char *argv[])
 {   
-    float x_vals[] = DEFAULT_XVALS;
-    float y_vals[DEFAULT_LEN];
-    if (argc == 1)
-    {
-        printf("stdin mode note yet implemented");
-    }
-    else if (argc != 3)
-    {
-        printf("please input 2 arguments: qp w.x y.z\n");
-    }
-    float m = atof(argv[1]);
-    //printf("m value is %f\n",m);
-    float b = atof(argv[2]);
-    //printf("b value is %f\n",b);
+    // set up structure for holding a point
+    //  we will declare an array of these 
+    //  for dumping a 2 value csv into
+    struct point {
+        float x;
+        float y;
+    };
 
-    for (int i = 0; i < 10; i++)
+    // declare array to hold picture
+    char *screen = calloc(sizeof(*screen) * COLS * ROWS,sizeof(*screen)); 
+
+    // declare struct for holding 5 points
+    // this should be dynamic in the future
+    struct point *pt = malloc(5 * sizeof(struct point)); 
+
+    // tell user arguments are ignored
+    if (argc != 1)
     {
-        y_vals[i] = function(m,b,x_vals[i]);
-       // printf("%f\n", y_vals[i]);
+        printf("arguments ignored. Not yet supported");
     }
-    
-    uint8_t ax[10][26] = { 0 };
-    
-    for (int i = 0; i < 26; i++)
+
+    // make some buffer for reading the first line of stdin
+    char line[LINEBUFF];
+
+    // control loop that reads each line of data and dumps
+    // the result as a float into point struct
+    int i=0;
+    char * pch;
+    while(fgets(line, LINEBUFF, stdin)!=NULL)
     {
-        for (int j = 0; j < 10; j++)
+        pch = strtok(line, ",");
+
+        pt[i].x = atof(pch);
+        pch = strtok(NULL, ",\n");
+        pt[i].y = atof(pch);
+
+        printf("%f and %f\n",pt[i].x, pt[i].y);
+
+        i++;
+    }
+    qp(screen);
+}
+int qp(char *pscreen)
+{
+    for (int i; i<ROWS;i++)
+    {   
+        putchar('>');
+        for (int j; j<COLS;j++)
         {
-            ax[j][i] = '0';
-        }       
+            if(*pscreen == 0)
+            {
+                putchar('*');
+            }
+        }
+        putchar('\n');
     }
-        
-    for (int i = 0; i < 10; i++)
-    {
-        ax[ (int) x_vals[i] ][ (int) y_vals[i] ] = '1';
-    }
-    
-    FILE *fp;
-    fp = fopen("print.pmm","w");
-    fprintf(fp,"P1\n# this is the picture file\n10 26\n");
-
-    for (int i = 26-1; i > 0-1; i--)
-    {
-        for (int j = 0; j < 10; j++)
-        {
-            putc(ax[j][i], fp);
-            putc(' ', fp);
-            //printf("%c",ax[j][i]);
-        }       
-        putc('\n',fp);
-        //printf("\n");
-    }
-
-    fclose(fp);
+    return 0;
 }

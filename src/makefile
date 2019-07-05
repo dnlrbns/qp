@@ -10,7 +10,7 @@ LIBS = -lm
 _DEPS = qp.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = qp.o func.o 
+_OBJ = qp.o 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: %.c $(DEPS)
